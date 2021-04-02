@@ -1,8 +1,13 @@
-## Exemplos
+## API de Receitas com GraphQL
+Repositório criado para estudar GraphQL. Foi feita uma API para representar um "caderno de receitas". 
+É possível cadastrar receitas, ingredientes e unidades de medidas.
+
+### Exemplos
 Acessar a url:
 - http://127.0.0.1:8000/graphql
 
-### Exemplos de cadastro
+**Exemplos de cadastro**
+
 Unidade de medida:
 ```
 mutation {
@@ -43,7 +48,8 @@ mutation {
 }
 ```
 
-### Exemplos de consulta
+**Exemplos de consulta**
+
 Todas as receitas:
 ```
 query {
