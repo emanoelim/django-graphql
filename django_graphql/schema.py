@@ -1,43 +1,8 @@
 import graphene
-from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 
-from django_graphql.cookbook.models import UnidadeMedida, Ingrediente, Receita
-
-
-class UnidadeMedidaNode(DjangoObjectType):
-    class Meta:
-        model = UnidadeMedida
-        fields = '__all__'
-        interfaces = (graphene.relay.Node,)
-        filter_fields = {
-            'nome': ['exact'],
-        }
-
-
-class IngredienteNode(DjangoObjectType):
-    class Meta:
-        model = Ingrediente
-        fields = '__all__'
-        interfaces = (graphene.relay.Node,)
-        filter_fields = {
-            'nome': ['exact'],
-        }
-
-
-class ReceitaNode(DjangoObjectType):
-    class Meta:
-        model = Receita
-        fields = '__all__'
-        filter_fields = {
-            'nome': ['exact', 'icontains', 'istartswith'],
-        }
-        interfaces = (graphene.relay.Node,)
-
-    ingredientes = graphene.List(IngredienteNode)
-
-    def resolve_ingredientes(self, info):
-        return Ingrediente.objects.filter(receita=self)
+from django_graphql.cookbook.mutations import CreateUnidadeMedida, CreateReceita, CreateIngrediente
+from django_graphql.cookbook.queries import UnidadeMedidaNode, IngredienteNode, ReceitaNode
 
 
 class Query(graphene.ObjectType):
@@ -51,5 +16,10 @@ class Query(graphene.ObjectType):
     lista_receitas = DjangoFilterConnectionField(ReceitaNode)
 
 
-schema = graphene.Schema(query=Query)
+class Mutation(graphene.ObjectType):
+    create_unidade_medida = CreateUnidadeMedida.Field()
+    create_receita = CreateReceita.Field()
+    create_ingrediente = CreateIngrediente.Field()
 
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
