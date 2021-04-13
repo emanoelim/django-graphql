@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=postgres2
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  migration:
+    image: djangographql
+    command: python manage.py migrate --noinput
+    depends_on:
+      - db
+
+  djangographql:
+    image: djangographql
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      - migration
