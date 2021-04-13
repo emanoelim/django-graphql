@@ -1,12 +1,16 @@
 ## API de Receitas com GraphQL
 Repositório criado para estudar GraphQL. Foi feita uma API para representar um "caderno de receitas". 
-É possível cadastrar receitas, ingredientes e unidades de medidas.
+É possível cadastrar receitas, ingredientes e unidades de medida.
 
-### Exemplos
-Acessar a url:
-- http://127.0.0.1:8000/graphql
+### Rodando o projeto
+```
+docker-compose build
+docker-compose up
+```
+### Utilizando a API
+Acesse a url: http://127.0.0.1:8000/graphql
 
-**Exemplos de cadastro**
+**Cadastrando itens**
 
 Unidade de medida:
 ```
@@ -48,7 +52,7 @@ mutation {
 }
 ```
 
-**Exemplos de consulta**
+**Consultando itens**
 
 Todas as receitas:
 ```
@@ -71,7 +75,7 @@ query {
 }
 ```
 
-Filtra receitas por nome:
+Receitas filtradas por nome:
 ```
 query {
   listaReceitas(nome_Icontains: "cenoura") {
@@ -92,7 +96,7 @@ query {
 }
 ```
 
-Filtar receitas pelo id:
+Receita filtrada por id:
 ```
 query {
   receita(id: "UmVjZWl0YU5vZGU6MQ==") {
